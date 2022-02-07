@@ -1,20 +1,21 @@
 <template>
   <div class="container">
-    <header>header</header>
-    <nav style="width: 240px;"><Menu/></nav>
+    <header><TitleBar /></header>
+    <nav style="width: 240px"><Menu /></nav>
     <main>main</main>
     <footer>Footer</footer>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
-import Menu from "../components/Menu.vue"
-
+import { Options, Vue } from "vue-class-component";
+import Menu from "../components/Menu.vue";
+import TitleBar from "../components/TitleBar.vue";
 @Options({
   components: {
-    Menu
-  }
+    TitleBar,
+    Menu,
+  },
 })
 export default class Home extends Vue {}
 </script>
@@ -30,24 +31,23 @@ export default class Home extends Vue {}
     "nav foot" 30px
     / auto 1fr;
 
-  >header {
+  > header {
     grid-area: head;
   }
 
-  >nav {
+  > nav {
     background-color: var(--th-background);
     grid-area: nav;
-    z-index: 2;
     border-right: 1px solid;
     border-color: var(--th-border);
   }
 
-  >main {
+  > main {
     grid-area: main;
     overflow: hidden;
   }
 
-  >footer {
+  > footer {
     grid-area: foot;
   }
 }
