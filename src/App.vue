@@ -56,6 +56,31 @@ textarea {
   line-height: inherit;
 }
 
+::-webkit-scrollbar {
+  background-color: var(--th-background);
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--th-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--th-body-bg);
+  border-radius: 16px;
+  border: 2px solid var(--th-background);
+  transition: all 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--th-hover);
+  transition: all 0.2s;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
 body {
   margin: 0px;
   padding: 0px;
