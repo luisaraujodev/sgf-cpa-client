@@ -1,7 +1,7 @@
 <template>
   <div class="titlebar">
     <div class="titlebar-menu">
-      <img src="../assets/logo.png" alt="" />
+      <img src="../assets/logo.png" alt="logo" />
       <nav @click="aciveMenu = true">
         <ul :active="aciveMenu">
           <li
@@ -10,20 +10,18 @@
             :select="activeMenuItem == idx"
             @mouseover="activeMenuItem = idx"
           >
-            <a :title="menu.label" target="_blank" rel="noopener"
+            <a :title="menu.label"
               >{{ menu.label }}
               <div class="dropdown-container dropdown-menu" v-if="menu.submenu">
                 <li v-for="submenu in menu.submenu" :key="submenu.label">
                   <a
                     :title="submenu.label"
-                    target="_blank"
-                    rel="noopener"
                     @click="submenu.click"
                     >{{ submenu.label || submenu.role }}
                     <span>{{ submenu.accelerator }}</span>
                     <div
-                      class="icon"
-                      dropdownControl="arrow"
+                      class="icon-container"
+                      icon="arrow"
                       @click="windowsActionMinimize"
                       v-if="submenu.submenu"
                     >
@@ -56,22 +54,22 @@
     <div class="titlebar-windowsControl">
       <div class="titlebar-ln"></div>
       <div
-        class="titlebar-icon"
-        windowsControl="minimize"
+        class="titlebar-icon icon-container"
+        icon="minimize"
         @click="windowsActionMinimize"
       >
         <i></i>
       </div>
       <div
-        class="titlebar-icon"
-        windowsControl="maximize"
+        class="titlebar-icon icon-container"
+        icon="maximize"
         @click="windowsActionMaximize"
       >
         <i></i>
       </div>
       <div
-        class="titlebar-icon"
-        windowsControl="close"
+        class="titlebar-icon icon-container"
+        icon="close"
         @click="windowsActionClose"
       >
         <i></i>
@@ -87,7 +85,6 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { MenuItemConstructorOptions } from "electron";
 
 @Options({
   data() {
@@ -133,6 +130,7 @@ export default class Menu extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
 .titlebar {
   display: flex;
   flex-direction: row;
@@ -151,6 +149,7 @@ export default class Menu extends Vue {}
 .titlebar > .titlebar-menu {
   display: flex;
   flex-direction: row;
+  align-items: center;
   -webkit-app-region: no-drag;
 
   nav {
@@ -161,8 +160,9 @@ export default class Menu extends Vue {}
   }
 
   img {
-    width: 28px;
-    height: 28px;
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
   }
 
   ul {
@@ -188,7 +188,7 @@ export default class Menu extends Vue {}
     height: auto;
     padding: 4px 10px 4px 10px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 400;
     font-size: var(--size-medium);
     color: var(--white);
     position: relative;
@@ -219,7 +219,7 @@ export default class Menu extends Vue {}
       color: var(--th-text-df);
     }
 
-    .icon {
+    .icon-container {
       display: flex;
       width: 8px;
       height: 8px;
@@ -231,11 +231,6 @@ export default class Menu extends Vue {}
       }
     }
 
-    .icon[dropdownControl="arrow"] i {
-      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 292.362 292.362'%3E%3Cg%3E%3Cpath d='M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428 s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z'/%3E%3C/g%3E%3C/svg%3E")
-        no-repeat 50% 50%;
-      transform: rotate(270deg);
-    }
   }
 
   .dropdown-menu {
@@ -250,8 +245,8 @@ export default class Menu extends Vue {}
 
   ul[active="true"] li[select="true"] {
     > a {
-      color: #fff;
-      background-color: #1a8d5f;
+      color: var(--white);
+      background-color: var(--th-hover);
     }
 
     .dropdown-menu {
@@ -274,7 +269,7 @@ export default class Menu extends Vue {}
       opacity: 1;
     }
 
-    .icon i{
+    .icon-container i{
       background-color: var(--white);
     }
 
@@ -314,40 +309,12 @@ export default class Menu extends Vue {}
     }
   }
 
-  .titlebar-icon:not([windowsControl="close"]):hover {
+  .titlebar-icon:not([icon="close"]):hover {
     background-color: var(--th-hover);
   }
 
-  .titlebar-icon[windowsControl="close"]:hover {
+  .titlebar-icon[icon="close"]:hover {
     background-color: var(--hover-red);
-  }
-
-  .titlebar-icon[windowsControl="minimize"] i {
-    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-  }
-
-  .titlebar-icon[windowsControl="unmaximize"] i {
-    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 8.798H8.798V11H0V2.202h2.202V0H11v8.798zm-3.298-5.5h-6.6v6.6h6.6v-6.6zM9.9 1.1H3.298v1.101h5.5v5.5h1.1v-6.6z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 8.798H8.798V11H0V2.202h2.202V0H11v8.798zm-3.298-5.5h-6.6v6.6h6.6v-6.6zM9.9 1.1H3.298v1.101h5.5v5.5h1.1v-6.6z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-  }
-
-  .titlebar-icon[windowsControl="maximize"] i {
-    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-  }
-
-  .titlebar-icon[windowsControl="close"] i {
-    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
-    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
-      no-repeat 50% 50%;
   }
 }
 
