@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <header><TitleBar /></header>
-    <nav style="width: 240px"><Menu /></nav>
-    <main>main</main>
+    <nav><Menu /></nav>
+    <main><TabControl /></main>
     <footer>Footer</footer>
   </div>
 </template>
@@ -11,10 +11,12 @@
 import { Options, Vue } from "vue-class-component";
 import Menu from "../components/Menu.vue";
 import TitleBar from "../components/TitleBar.vue";
+import TabControl from "../components/TabControl.vue";
 @Options({
   components: {
     TitleBar,
     Menu,
+    TabControl,
   },
 })
 export default class Home extends Vue {}
@@ -26,7 +28,7 @@ export default class Home extends Vue {}
   width: 100%;
   height: 100%;
   grid-template:
-    "head head" 42px
+    "head head" auto
     "nav main" 1fr
     "nav foot" 30px
     / auto 1fr;
@@ -49,6 +51,7 @@ export default class Home extends Vue {}
 
   > footer {
     grid-area: foot;
+    border-top: 1px solid var(--th-border);
   }
 }
 </style>
