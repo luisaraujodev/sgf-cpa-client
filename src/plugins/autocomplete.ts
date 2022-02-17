@@ -96,7 +96,6 @@ export default class AutoComplete implements IAutoComplete {
     const isOpen = this.uiData.getAttribute("open");
 
     if ((e.key == "ArrowUp" || e.key == "ArrowDown") && isOpen) {
-      console.log('dd')
       e.preventDefault()
       const list_li = this.uiData.querySelectorAll("li");
       if (list_li.length > 0) {
@@ -113,12 +112,16 @@ export default class AutoComplete implements IAutoComplete {
       }
     }
 
-    if ((e.key == "Tab" || e.key == "Enter") && isOpen) {
+    if ((e.key == "Tab") && isOpen) {
       console.log('dd')
       e.preventDefault()
       const list_li = this.uiData.querySelectorAll("li");
       const next = this.listSelected < 0 ? 0 : this.listSelected
       this.selectData(list_li[next], true)
+      this.closeAutoComplete()
+    }
+
+    if (e.key == "Enter") {
       this.closeAutoComplete()
     }
   }
